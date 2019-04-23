@@ -29,7 +29,7 @@ public class DriverActivity
         this.mBtnDriver.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    Intent k = new Intent(DriverActivity.this, ScanActivity.class);
+                    Intent k = new Intent(DriverActivity.this, ScanIntroActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();

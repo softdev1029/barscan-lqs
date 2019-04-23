@@ -37,7 +37,7 @@ public class DeliveryActivity
 
             public void onClick(View v) {
                 try {
-                    Intent k = new Intent(DeliveryActivity.this, ScanActivity.class);
+                    Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -49,7 +49,7 @@ public class DeliveryActivity
 
             public void onClick(View v) {
                 try {
-                    Intent k = new Intent(DeliveryActivity.this, ScanActivity.class);
+                    Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -61,7 +61,7 @@ public class DeliveryActivity
 
             public void onClick(View v) {
                 try {
-                    Intent k = new Intent(DeliveryActivity.this, ScanActivity.class);
+                    Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -73,7 +73,7 @@ public class DeliveryActivity
 
             public void onClick(View v) {
                 try {
-                    Intent k = new Intent(DeliveryActivity.this, ScanActivity.class);
+                    Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -85,7 +85,7 @@ public class DeliveryActivity
 
             public void onClick(View v) {
                 try {
-                    Intent k = new Intent(DeliveryActivity.this, ScanActivity.class);
+                    Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
