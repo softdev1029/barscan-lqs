@@ -57,12 +57,24 @@
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp" />
-        <TextView
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/white" />
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:id="@+id/tv_code_log"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:scrollbars="vertical" />
+        </ScrollView>
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
