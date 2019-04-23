@@ -9,4 +9,15 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <color name="colorAccent">#ffff4081</color>
+    <color name="colorPrimary">#ff3f51b5</color>
+    <color name="colorPrimaryDark">#ff303f9f</color>
+    <!-- common -->
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <!-- share -->
+    <color name="bg">#ff1f4181</color>
+    <color name="btn">#ff3ef497</color>
+    <!-- main -->
 </resources>

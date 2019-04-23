@@ -1,22 +1,24 @@
-package me.dm7.barcodescanner.zxing.sample;
+package com.softdev.barcodescanner;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import com.softdev.barcodescanner.R;
+import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
 
-public class SimpleScannerActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
+public class ScanActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
+
     private ZXingScannerView mScannerView;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-        setContentView(R.layout.activity_simple_scanner);
+        setContentView(R.layout.activity_scan);
         setupToolbar();
 
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
@@ -50,7 +52,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+                mScannerView.resumeCameraPreview(ScanActivity.this);
             }
         }, 2000);
     }

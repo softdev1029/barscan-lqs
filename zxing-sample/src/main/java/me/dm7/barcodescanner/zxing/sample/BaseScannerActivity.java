@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import com.softdev.barcodescanner.R;
 
 public class BaseScannerActivity extends AppCompatActivity {
     public void setupToolbar() {

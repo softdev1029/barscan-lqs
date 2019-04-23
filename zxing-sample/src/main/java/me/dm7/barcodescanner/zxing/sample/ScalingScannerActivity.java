@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import com.softdev.barcodescanner.R;
 
 public class ScalingScannerActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
     private static final String FLASH_STATE = "FLASH_STATE";
