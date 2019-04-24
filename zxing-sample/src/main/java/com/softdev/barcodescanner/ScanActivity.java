@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frosquivel.magicaltakephoto.MagicalTakePhoto;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.zxing.Result;
 import com.softdev.barcodescanner.utils.Constant;
@@ -58,7 +61,8 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     private int mAction;
     private final String FILE_NAME = "file-name";
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private MagicalTakePhoto mMagicalTakePhoto;
 
     @Override
     public void onCreate(Bundle state) {
@@ -120,6 +124,8 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
 
         String data = FileUtil.readData(this, FILE_NAME + mAction);
         mCodeLogView.setText(data + "\nPlease click here if you want to scan articles");
+
+        mMagicalTakePhoto = new MagicalTakePhoto(this);
     }
 
     private void setViewHandler() {
@@ -206,14 +212,42 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     }
 
     private void dispatchTakePictureIntent() {
+//        mMagicalTakePhoto.takePhoto("my_photo_name");
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
+            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+            File newdir = new File(dir);
+            newdir.mkdirs();
+            String file = dir + "1.jpg";
+            File newfile = new File(file);
+
+            try {
+                newfile.createNewFile();
+            } catch (IOException e) {
+            }
+
+            Uri outputFileUri = Uri.fromFile(newfile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mMagicalTakePhoto.resultPhoto(requestCode, resultCode, data);
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+        String file = dir + "1.jpg";
+        File imgFile = new File(file);
+
+        if (imgFile.exists()) {
+
+            Bitmap bm = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            mCameraResultView.setImageBitmap(bm);
+        }
+
+
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
 //                && resultCode == RESULT_OK) {
 //            Bundle extras = data.getExtras();

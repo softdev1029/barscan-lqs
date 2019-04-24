@@ -3,6 +3,7 @@ package com.softdev.barcodescanner;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -166,11 +167,10 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-//                && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            mCameraResultView.setImageBitmap(imageBitmap);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mCameraResultView.setImageBitmap(imageBitmap);
             mCameraResultView.setVisibility(View.VISIBLE);
             mScannerLayout.setVisibility(View.GONE);
         }
