@@ -70,4 +70,7 @@
     <!-- scan -->
     <string name="btn_photo">PHOTO</string>
     <string name="btn_scan">SCAN</string>
+    <string name="btn_delete">DELETE</string>
+    <string name="btn_send">SEND</string>
+    <string name="msg_delete">Are you sure to delete?</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.softdev.barcodescanner;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -108,7 +110,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         Intent i = getIntent();
         mAction = i.getIntExtra(Constant.ACTION_NAME, Constant.DEFAULT_ACTION);
 
-        mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " (for BAG)");
+        mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " for BAG");
 
         if (mAction == Constant.ACTION_DAMAGE) {
             mBtnPhoto.setVisibility(View.VISIBLE);
@@ -117,7 +119,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         }
 
         String data = FileUtil.readData(this, FILE_NAME + mAction);
-        mCodeLogView.setText(data);
+        mCodeLogView.setText(data + "\nPlease click here if you want to scan articles");
     }
 
     private void setViewHandler() {
@@ -137,8 +139,20 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         mBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCodeLogView.setText("");
-                FileUtil.clearData(ScanActivity.this, FILE_NAME + mAction);
+
+                new AlertDialog.Builder(ScanActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage(R.string.msg_delete)
+                        .setPositiveButton(R.string.lbl_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mCodeLogView.setText("Please click here if you want to scan articles");
+                                FileUtil.clearData(ScanActivity.this, FILE_NAME + mAction);
+                            }
+                        })
+                        .setNegativeButton(R.string.lbl_no, null)
+                        .show();
+
             }
         });
         mCodeLogView.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +190,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         String data = getResources().getString(Util.getActionTitleId(mAction)) + ": " + rawResult.getText() + ", " + rawResult.getBarcodeFormat();
         FileUtil.writeData(this, FILE_NAME + mAction, data);
         String readData = FileUtil.readData(this, FILE_NAME + mAction);
-        mCodeLogView.setText(readData);
+        mCodeLogView.setText(readData + "\nPlease click here if you want to scan articles");
 
         // Note:
         // * Wait 2 seconds to resume the preview.

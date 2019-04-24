@@ -1,5 +1,7 @@
 package com.softdev.barcodescanner;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -116,8 +118,18 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
         mBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCodeLogView.setText("");
-                FileUtil.clearData(ScanArticleActivity.this, FILE_NAME + mAction);
+                new AlertDialog.Builder(ScanArticleActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage(R.string.msg_delete)
+                        .setPositiveButton(R.string.lbl_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mCodeLogView.setText("");
+                                FileUtil.clearData(ScanArticleActivity.this, FILE_NAME + mAction);
+                            }
+                        })
+                        .setNegativeButton(R.string.lbl_no, null)
+                        .show();
             }
         });
     }
