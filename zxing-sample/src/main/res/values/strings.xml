@@ -37,6 +37,11 @@
 
     <!-- gateway -->
     <string name="lbl_gateway">GATEWAY SCAN</string>
+    <string name="lbl_bypass">Bypass</string>
+    <string name="lbl_airport">Lisbon Airport</string>
+    <string name="lbl_departure">Lisbon Departure</string>
+    <string name="lbl_arrival">Arrival At Destination</string>
+    <string name="btn_bypass">Bypass</string>
     <string name="btn_airport">Lisbon Airport</string>
     <string name="btn_departure">Lisbon Departure</string>
     <string name="btn_arrival">Arrival At Destination</string>
@@ -47,6 +52,12 @@
     <string name="btn_delivery">Delivery</string>
 
     <!-- delivery -->
+    <string name="lbl_delivery">Delivery</string>
+    <string name="lbl_bad_address">Bad Address</string>
+    <string name="lbl_refused">Refused</string>
+    <string name="lbl_closed">Closed</string>
+    <string name="lbl_damage">Damage</string>
+    <string name="lbl_pod">POD</string>
     <string name="btn_bad_address">Bad Address</string>
     <string name="btn_refused">Refused</string>
     <string name="btn_closed">Closed</string>
@@ -55,5 +66,8 @@
 
     <!-- scan intro -->
     <string name="lbl_scan">"GATEWAY SCAN\nLisbon Airport\nByPass Scan"</string>
+
+    <!-- scan -->
+    <string name="btn_photo">PHOTO</string>
     <string name="btn_scan">SCAN</string>
 </resources>

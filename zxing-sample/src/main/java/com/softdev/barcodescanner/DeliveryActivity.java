@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.softdev.barcodescanner.utils.Constant;
+
 public class DeliveryActivity
         extends AppCompatActivity {
     private Button mBtnBadAddress;
@@ -38,6 +40,7 @@ public class DeliveryActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_BAD_ADDRESS);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -50,6 +53,7 @@ public class DeliveryActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_REFUSED);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -62,6 +66,7 @@ public class DeliveryActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_CLOSED);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,6 +79,7 @@ public class DeliveryActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_DAMAGE);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -86,6 +92,7 @@ public class DeliveryActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DeliveryActivity.this, ScanIntroActivity.class);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_POD);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();

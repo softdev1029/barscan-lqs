@@ -1,16 +1,10 @@
 package com.softdev.barcodescanner;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -23,21 +17,10 @@ import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
 import com.softdev.barcodescanner.utils.Util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
 
-public class ScanActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
+public class ScanArticleActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
 
     // views
     private Button mBtnPhoto;
@@ -104,7 +87,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         Intent i = getIntent();
         mAction = i.getIntExtra(Constant.ACTION_NAME, Constant.DEFAULT_ACTION);
 
-        mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " (for BAG)");
+        mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " for ARTICLE");
 
         if (mAction == Constant.ACTION_DAMAGE) {
             mBtnPhoto.setVisibility(View.VISIBLE);
@@ -134,15 +117,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
             @Override
             public void onClick(View v) {
                 mCodeLogView.setText("");
-                FileUtil.clearData(ScanActivity.this, FILE_NAME + mAction);
-            }
-        });
-        mCodeLogView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ScanActivity.this, ScanArticleActivity.class);
-                intent.putExtra(Constant.ACTION_NAME, mAction);
-                startActivity(intent);
+                FileUtil.clearData(ScanArticleActivity.this, FILE_NAME + mAction);
             }
         });
     }
@@ -165,7 +140,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mScannerView.resumeCameraPreview(ScanActivity.this);
+                mScannerView.resumeCameraPreview(ScanArticleActivity.this);
             }
         }, 2000);
     }

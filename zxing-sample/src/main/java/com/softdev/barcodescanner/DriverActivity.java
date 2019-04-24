@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.softdev.barcodescanner.utils.Constant;
+
 public class DriverActivity
         extends AppCompatActivity {
     private Button mBtnDriver = null;
@@ -30,6 +32,7 @@ public class DriverActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DriverActivity.this, ScanIntroActivity.class);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_DRIVER);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
