@@ -9,6 +9,8 @@ public class Barcode {
     private String mBarcode = null;
     private int mActionType = Constant.DEFAULT_ACTION;
     private String mAction = null;
+    private int mKey = 0;
+    private int mParentKey = 0;
     private HashMap<Integer, Barcode> mMap = new HashMap<>();
 
     public String getBarcode() {
@@ -48,10 +50,12 @@ public class Barcode {
             return Constant.ERROR;
         }
         Barcode code = new Barcode();
+        int key = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        code.setKey(key);
         code.setAction(mAction);
         code.setActionType(mActionType);
         code.setBarcode(barcode);
-        int key = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        code.setParentKey(mKey);
         mMap.put(key, code);
         return key;
     }
@@ -63,5 +67,21 @@ public class Barcode {
 
     public Barcode getBarcode(int key) {
         return mMap.get(key);
+    }
+
+    public int getKey() {
+        return mKey;
+    }
+
+    public void setKey(int key) {
+        mKey = key;
+    }
+
+    public int getParentKey() {
+        return mParentKey;
+    }
+
+    public void setParentKey(int parentKey) {
+        this.mParentKey = parentKey;
     }
 }

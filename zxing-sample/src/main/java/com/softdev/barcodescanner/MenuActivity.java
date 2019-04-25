@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.softdev.barcodescanner.network.GetDataTask;
+
 public class MenuActivity
         extends AppCompatActivity {
     private Button mBtnGateway = null;
@@ -18,12 +20,17 @@ public class MenuActivity
         setContentView(R.layout.activity_menu);
 
         initView();
+        initData();
         setViewHandler();
     }
 
     private void initView() {
         mBtnGateway = findViewById(R.id.button_gateway);
         mBtnDriver = findViewById(R.id.button_driver);
+    }
+
+    private void initData() {
+        new GetDataTask(this).execute();
     }
 
     private void setViewHandler() {

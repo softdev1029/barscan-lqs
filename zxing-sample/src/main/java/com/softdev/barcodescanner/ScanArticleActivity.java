@@ -30,6 +30,7 @@ import com.google.zxing.Result;
 import com.softdev.barcodescanner.adapters.BarcodeAdapter;
 import com.softdev.barcodescanner.models.Barcode;
 import com.softdev.barcodescanner.models.Store;
+import com.softdev.barcodescanner.network.SendRequest;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
 import com.softdev.barcodescanner.utils.Util;
@@ -50,9 +51,12 @@ import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
 
 public class ScanArticleActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
 
+    private Context mContext;
+
     // views
     private Button mBtnPhoto;
     private Button mBtnScan;
+    private Button mBtnSend;
     private TextView mTitleView;
     private FrameLayout mScannerLayout;
     private ZXingScannerView mScannerView;
@@ -101,6 +105,7 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
     private void initView() {
         mBtnPhoto = findViewById(R.id.button_photo);
         mBtnScan = findViewById(R.id.button_scan);
+        mBtnSend = findViewById(R.id.button_send);
 
         mTitleView = findViewById(R.id.tv_title);
 
@@ -120,6 +125,8 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
     }
 
     private void initData() {
+        mContext = this;
+
         Intent i = getIntent();
         mAction = i.getIntExtra(Constant.ACTION_NAME, Constant.DEFAULT_ACTION);
         mBagKey = i.getIntExtra(Constant.BAG_KEY, Constant.DEFAULT_ACTION);
@@ -178,6 +185,12 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
             public void onClick(View v) {
                 mScannerLayout.setVisibility(View.VISIBLE);
                 mCameraResultView.setVisibility(View.GONE);
+            }
+        });
+        mBtnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SendRequest(mContext, mBag.getMap(), mAction).execute();
             }
         });
         mCodeLogView.setOnClickListener(new View.OnClickListener() {

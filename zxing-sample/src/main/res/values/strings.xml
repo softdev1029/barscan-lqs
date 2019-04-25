@@ -30,6 +30,8 @@
     <string name="lbl_yes">Yes</string>
     <string name="lbl_no">No</string>
     <string name="msg_exit">Do you want to exit?</string>
+    <string name="title_network">Network Connect</string>
+    <string name="msg_network">Please wait...</string>
     <!-- share -->
     <!-- main -->
     <string name="btn_gateway">GATEWAY</string>

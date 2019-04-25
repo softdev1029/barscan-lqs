@@ -18,7 +18,7 @@ public class Store {
         }
     }
 
-    public static int addBarcode(int actionType, String action, String barcode) {
+    public static int addBarcode(int actionType, String action, String barcode, int key) {
         if (actionType < 0 || actionType >= Constant.ACTION_COUNT) {
             return Constant.ERROR;
         }
@@ -26,10 +26,14 @@ public class Store {
             return Constant.ERROR;
         }
         Barcode code = new Barcode();
+        if (key == 0) {
+            key = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        }
+        code.setKey(key);
         code.setAction(action);
         code.setActionType(actionType);
         code.setBarcode(barcode);
-        int key = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        code.setParentKey(0);
         mCodeList.get(actionType).put(key, code);
         return key;
     }

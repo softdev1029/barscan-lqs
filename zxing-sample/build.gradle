@@ -9,6 +9,9 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.github.gcacace:signature-pad:1.2.1'
     implementation 'com.frosquivel:magicaltakephoto:1.0'
+    implementation 'com.squareup.okhttp:okhttp:2.4.0'
+    implementation 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+
 }
 
 android {

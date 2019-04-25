@@ -26,4 +26,11 @@ public class Constant {
     // func error
     public final static int ERROR = -1;
     public final static int SUCCESS = 0;
+
+    // network
+    public final static String JSON_BODY = "records";
+    public final static String JSON_KEY = "key";
+    public final static String JSON_CODE = "barcode";
+    public final static String JSON_PARENT = "parent";
+    public final static String JSON_TYPE = "type";
 }

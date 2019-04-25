@@ -28,7 +28,9 @@ import com.frosquivel.magicaltakephoto.MagicalTakePhoto;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.zxing.Result;
 import com.softdev.barcodescanner.adapters.BarcodeAdapter;
+import com.softdev.barcodescanner.models.Barcode;
 import com.softdev.barcodescanner.models.Store;
+import com.softdev.barcodescanner.network.SendRequest;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
 import com.softdev.barcodescanner.utils.Util;
@@ -43,15 +45,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Set;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
 
 public class ScanActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
 
+    private Context mContext;
+
     // views
     private Button mBtnPhoto;
     private Button mBtnScan;
+    private Button mBtnSend;
     private TextView mTitleView;
     private FrameLayout mScannerLayout;
     private ZXingScannerView mScannerView;
@@ -98,6 +105,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     private void initView() {
         mBtnPhoto = findViewById(R.id.button_photo);
         mBtnScan = findViewById(R.id.button_scan);
+        mBtnSend = findViewById(R.id.button_send);
 
         mTitleView = findViewById(R.id.tv_title);
 
@@ -114,22 +122,11 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         mPodBox.setSelected(false);
 
         mSignaturePad = (SignaturePad) findViewById(R.id.signature_pad);
-
-        // adapter
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mCodeLogView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mCodeLogView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new BarcodeAdapter(this, Store.getBarcodeMap(mAction));
-        mCodeLogView.setAdapter(mAdapter);
     }
 
     private void initData() {
+        mContext = this;
+
         Intent i = getIntent();
         mAction = i.getIntExtra(Constant.ACTION_NAME, Constant.DEFAULT_ACTION);
 
@@ -159,6 +156,19 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         } else {
             mPodBox.setText(R.string.lbl_pod_desc);
         }
+
+        // adapter
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mCodeLogView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mCodeLogView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new BarcodeAdapter(this, Store.getBarcodeMap(mAction));
+        mCodeLogView.setAdapter(mAdapter);
     }
 
     private void setViewHandler() {
@@ -173,6 +183,12 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
             public void onClick(View v) {
                 mScannerLayout.setVisibility(View.VISIBLE);
                 mCameraResultView.setVisibility(View.GONE);
+            }
+        });
+        mBtnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SendRequest(mContext, null, mAction).execute();
             }
         });
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
@@ -201,7 +217,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
 
         String barcode = rawResult.getText();
         String action = Util.getActionTitle(this, mAction);
-        int key = Store.addBarcode(mAction, action, barcode);
+        int key = Store.addBarcode(mAction, action, barcode, 0);
         mAdapter.notifyDataSetChanged();
 
 
