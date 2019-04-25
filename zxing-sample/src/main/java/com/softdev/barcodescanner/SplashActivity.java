@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.softdev.barcodescanner.models.Store;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -16,9 +18,14 @@ public class SplashActivity extends AppCompatActivity {
 
         initView();
         setViewHandler();
+        initGlobal();
     }
 
     private void initView() {
+    }
+
+    private void initGlobal() {
+        Store.configure();
     }
 
     private void setViewHandler() {

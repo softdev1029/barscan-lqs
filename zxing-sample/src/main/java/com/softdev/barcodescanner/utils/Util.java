@@ -1,5 +1,7 @@
 package com.softdev.barcodescanner.utils;
 
+import android.content.Context;
+
 import com.softdev.barcodescanner.R;
 
 public class Util {
@@ -15,8 +17,8 @@ public class Util {
             return R.string.lbl_arrival;
         }
         // driver
-        else if (action == Constant.ACTION_DRIVER) {
-            return R.string.lbl_driver;
+        else if (action == Constant.ACTION_DRIVER_LOAD) {
+            return R.string.lbl_driver_load;
         }
         // delivery
         else if (action == Constant.ACTION_BAD_ADDRESS) {
@@ -31,5 +33,9 @@ public class Util {
             return R.string.lbl_pod;
         }
         return R.string.lbl_gateway;
+    }
+
+    public static String getActionTitle(Context context, int action) {
+        return context.getResources().getString(getActionTitleId(action));
     }
 }

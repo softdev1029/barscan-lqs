@@ -48,6 +48,7 @@
 
     <!-- driver -->
     <string name="lbl_driver">DRIVER</string>
+    <string name="lbl_driver_load">Driver Load</string>
     <string name="btn_driver_load">Driver Load</string>
     <string name="btn_delivery">Delivery</string>
 
@@ -73,4 +74,6 @@
     <string name="btn_delete">DELETE</string>
     <string name="btn_send">SEND</string>
     <string name="msg_delete">Are you sure to delete?</string>
+    <string name="lbl_pod_desc">POD: </string>
+    <string name="lbl_obs">OBS: </string>
 </resources>

@@ -76,51 +76,27 @@
             <FrameLayout
                 android:id="@+id/content_frame"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="@dimen/height_scan_camera" />
 
             <ImageView
                 android:id="@+id/iv_camera_result"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/height_scan_elem"
                 android:src="@drawable/logo" />
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/code_log_view"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="horizontal">
-
-                <ScrollView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="4"
-                    android:fillViewport="true"
-                    android:scrollbars="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_code_log"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:scrollbars="vertical" />
-                </ScrollView>
-
-                <Button
-                    android:id="@+id/button_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/btn"
-                    android:text="@string/btn_delete"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+                android:layout_height="@dimen/height_scan_elem"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:scrollbars="vertical" />
 
             <com.github.gcacace.signaturepad.views.SignaturePad xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/signature_pad"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="2dp"
+                android:layout_height="@dimen/height_scan_elem"
                 android:layout_marginTop="2dp"
                 android:background="@color/white"
                 android:text="For Customer Signature"
@@ -129,7 +105,8 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/height_scan_elem"
+                android:layout_marginTop="2dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
@@ -139,7 +116,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:gravity="top"
-                    android:text="POD: " />
+                    android:text="@string/lbl_pod_desc" />
             </LinearLayout>
 
             <Button

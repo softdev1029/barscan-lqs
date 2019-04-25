@@ -12,6 +12,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 import com.frosquivel.magicaltakephoto.MagicalTakePhoto;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.zxing.Result;
+import com.softdev.barcodescanner.adapters.BarcodeAdapter;
+import com.softdev.barcodescanner.models.Store;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
 import com.softdev.barcodescanner.utils.Util;
@@ -48,14 +52,17 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     // views
     private Button mBtnPhoto;
     private Button mBtnScan;
-    private Button mBtnDelete;
     private TextView mTitleView;
     private FrameLayout mScannerLayout;
     private ZXingScannerView mScannerView;
     private ImageView mCameraResultView;
-    private TextView mCodeLogView;
+    private RecyclerView mCodeLogView;
     private SignaturePad mSignaturePad;
     private EditText mPodBox;
+
+    // adapter
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     // logic
     private int mAction;
@@ -91,7 +98,6 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     private void initView() {
         mBtnPhoto = findViewById(R.id.button_photo);
         mBtnScan = findViewById(R.id.button_scan);
-        mBtnDelete = findViewById(R.id.button_delete);
 
         mTitleView = findViewById(R.id.tv_title);
 
@@ -102,12 +108,25 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         mCameraResultView = findViewById(R.id.iv_camera_result);
         mCameraResultView.setVisibility(View.GONE);
 
-        mCodeLogView = findViewById(R.id.tv_code_log);
+        mCodeLogView = findViewById(R.id.code_log_view);
 
         mPodBox = findViewById(R.id.et_pod);
         mPodBox.setSelected(false);
 
         mSignaturePad = (SignaturePad) findViewById(R.id.signature_pad);
+
+        // adapter
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mCodeLogView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mCodeLogView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new BarcodeAdapter(this, Store.getBarcodeMap(mAction));
+        mCodeLogView.setAdapter(mAdapter);
     }
 
     private void initData() {
@@ -123,9 +142,23 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         }
 
         String data = FileUtil.readData(this, FILE_NAME + mAction);
-        mCodeLogView.setText(data + "\nPlease click here if you want to scan articles");
 
         mMagicalTakePhoto = new MagicalTakePhoto(this);
+
+        if (mAction == Constant.ACTION_POD) {
+            mSignaturePad.setVisibility(View.VISIBLE);
+        } else {
+            mSignaturePad.setVisibility(View.GONE);
+        }
+
+        if (mAction == Constant.ACTION_BAD_ADDRESS ||
+                mAction == Constant.ACTION_REFUSED ||
+                mAction == Constant.ACTION_CLOSED ||
+                mAction == Constant.ACTION_DAMAGE) {
+            mPodBox.setText(R.string.lbl_obs);
+        } else {
+            mPodBox.setText(R.string.lbl_pod_desc);
+        }
     }
 
     private void setViewHandler() {
@@ -140,33 +173,6 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
             public void onClick(View v) {
                 mScannerLayout.setVisibility(View.VISIBLE);
                 mCameraResultView.setVisibility(View.GONE);
-            }
-        });
-        mBtnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new AlertDialog.Builder(ScanActivity.this)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage(R.string.msg_delete)
-                        .setPositiveButton(R.string.lbl_yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mCodeLogView.setText("Please click here if you want to scan articles");
-                                FileUtil.clearData(ScanActivity.this, FILE_NAME + mAction);
-                            }
-                        })
-                        .setNegativeButton(R.string.lbl_no, null)
-                        .show();
-
-            }
-        });
-        mCodeLogView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ScanActivity.this, ScanArticleActivity.class);
-                intent.putExtra(Constant.ACTION_NAME, mAction);
-                startActivity(intent);
             }
         });
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
@@ -193,10 +199,15 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         Toast.makeText(this, "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
-        String data = getResources().getString(Util.getActionTitleId(mAction)) + ": " + rawResult.getText() + ", " + rawResult.getBarcodeFormat();
+        String barcode = rawResult.getText();
+        String action = Util.getActionTitle(this, mAction);
+        int key = Store.addBarcode(mAction, action, barcode);
+        mAdapter.notifyDataSetChanged();
+
+
+        String data = action + ": " + rawResult.getText() + ", " + rawResult.getBarcodeFormat();
         FileUtil.writeData(this, FILE_NAME + mAction, data);
         String readData = FileUtil.readData(this, FILE_NAME + mAction);
-        mCodeLogView.setText(readData + "\nPlease click here if you want to scan articles");
 
         // Note:
         // * Wait 2 seconds to resume the preview.

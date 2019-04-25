@@ -32,7 +32,7 @@ public class DriverActivity
             public void onClick(View v) {
                 try {
                     Intent k = new Intent(DriverActivity.this, ScanIntroActivity.class);
-                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_DRIVER);
+                    k.putExtra(Constant.ACTION_NAME, Constant.ACTION_DRIVER_LOAD);
                     startActivity(k);
                 } catch (Exception e) {
                     e.printStackTrace();
