@@ -224,6 +224,8 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
 
     public void sendBarcode() {
         new SendRequest(mContext, null, mAction, mAdapter).execute();
+        mSignaturePad.clear();
+        mCameraResultView.setImageResource(0);
     }
     @Override
     public void handleResult(Result rawResult) {

@@ -310,5 +310,7 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
     @Override
     public void sendBarcode() {
         new SendRequest(mContext, mBag.getMap(), mAction, mAdapter).execute();
+        mSignaturePad.clear();
+        mCameraResultView.setImageResource(0);
     }
 }
