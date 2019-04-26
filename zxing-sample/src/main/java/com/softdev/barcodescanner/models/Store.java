@@ -46,6 +46,14 @@ public class Store {
         return Constant.SUCCESS;
     }
 
+    public static int deleteBarcode(int actionType) {
+        if (actionType < 0 || actionType >= Constant.ACTION_COUNT) {
+            return Constant.ERROR;
+        }
+        mCodeList.get(actionType).clear();
+        return Constant.SUCCESS;
+    }
+
     public static Barcode getBarcode(int actionType, int key) {
         if (actionType < 0 || actionType >= Constant.ACTION_COUNT) {
             return null;

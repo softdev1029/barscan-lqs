@@ -33,4 +33,8 @@ public class Constant {
     public final static String JSON_CODE = "barcode";
     public final static String JSON_PARENT = "parent";
     public final static String JSON_TYPE = "type";
+
+    // log
+    public final static String TAG = "barscan";
+    public final static String TAG_LOGIN = TAG + "login";
 }

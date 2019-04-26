@@ -65,6 +65,11 @@ public class Barcode {
         return Constant.SUCCESS;
     }
 
+    public int deleteBarcode() {
+        mMap.clear();
+        return Constant.SUCCESS;
+    }
+
     public Barcode getBarcode(int key) {
         return mMap.get(key);
     }

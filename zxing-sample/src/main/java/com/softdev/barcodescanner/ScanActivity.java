@@ -157,6 +157,16 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
             mPodBox.setText(R.string.lbl_pod_desc);
         }
 
+        if (mAction == Constant.ACTION_BYPASS ||
+                mAction == Constant.ACTION_AIRPORT ||
+                mAction == Constant.ACTION_DEPARTURE ||
+                mAction == Constant.ACTION_ARRIVAL ||
+                mAction == Constant.ACTION_DRIVER_LOAD) {
+            mPodBox.setVisibility(View.GONE);
+        } else {
+            mPodBox.setVisibility(View.VISIBLE);
+        }
+
         // adapter
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -189,6 +199,9 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
             @Override
             public void onClick(View v) {
                 new SendRequest(mContext, null, mAction).execute();
+
+                // clean
+                Store.deleteBarcode(mAction);
             }
         });
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {

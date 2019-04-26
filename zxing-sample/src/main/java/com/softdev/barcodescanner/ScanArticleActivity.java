@@ -158,6 +158,16 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
             mPodBox.setText(R.string.lbl_pod_desc);
         }
 
+        if (mAction == Constant.ACTION_BYPASS ||
+                mAction == Constant.ACTION_AIRPORT ||
+                mAction == Constant.ACTION_DEPARTURE ||
+                mAction == Constant.ACTION_ARRIVAL ||
+                mAction == Constant.ACTION_DRIVER_LOAD) {
+            mPodBox.setVisibility(View.GONE);
+        } else {
+            mPodBox.setVisibility(View.VISIBLE);
+        }
+
         // adapter
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -191,6 +201,9 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
             @Override
             public void onClick(View v) {
                 new SendRequest(mContext, mBag.getMap(), mAction).execute();
+
+                // clean
+                mBag.deleteBarcode();
             }
         });
         mCodeLogView.setOnClickListener(new View.OnClickListener() {
