@@ -3,6 +3,7 @@ package com.softdev.barcodescanner.network;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.softdev.barcodescanner.utils.Constant;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 public class JSONParser {
 
-    private static final String MAIN_URL = "https://script.google.com/macros/s/AKfycbyuX2dvx-iTuy9lOpk1XfxiYCoQdcSZcL4OqQ8PRx3BhSU4MUY/exec?id=1l-Akhh1hF6e6-9WmPgGEko9pS6crYyz5X6OJ8mqOO0Y&sheet=Sheet1";
+    private static final String MAIN_URL = Constant.URL_GET_CODE + "?id=" + Constant.GOOGLE_DOC_ID + "&sheet=Sheet1";
 
     public static final String TAG = "TAG";
 

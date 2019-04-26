@@ -1,5 +1,7 @@
 package com.softdev.barcodescanner.models;
 
+import android.text.format.DateFormat;
+
 import com.softdev.barcodescanner.utils.Constant;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 public class Store {
 
+    private static String mUserId;
     private static ArrayList<HashMap<Integer, Barcode>> mCodeList = new ArrayList<>();
 
     public static void configure() {
@@ -18,7 +21,7 @@ public class Store {
         }
     }
 
-    public static int addBarcode(int actionType, String action, String barcode, int key) {
+    public static int addBarcode(int actionType, String action, String barcode, String time, int key) {
         if (actionType < 0 || actionType >= Constant.ACTION_COUNT) {
             return Constant.ERROR;
         }
@@ -26,9 +29,15 @@ public class Store {
             return Constant.ERROR;
         }
         Barcode code = new Barcode();
-        if (key == 0) {
-            key = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        Date d = new Date();
+        if (time == null) {
+            time = DateFormat.format("MMMM d, yyyy HH:mm:ss", d.getTime()).toString();
         }
+        code.setTime(time);
+        if (key == 0) {
+            key = (int) ((d.getTime() / 1000L) % Integer.MAX_VALUE);
+        }
+        code.setKey(key);
         code.setKey(key);
         code.setAction(action);
         code.setActionType(actionType);
@@ -73,5 +82,13 @@ public class Store {
             return null;
         }
         return mCodeList.get(actionType);
+    }
+
+    public static String getUserId() {
+        return mUserId;
+    }
+
+    public static void setUserId(String userId) {
+        mUserId = userId;
     }
 }

@@ -28,8 +28,10 @@ import com.frosquivel.magicaltakephoto.MagicalTakePhoto;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.zxing.Result;
 import com.softdev.barcodescanner.adapters.BarcodeAdapter;
+import com.softdev.barcodescanner.interfaces.ISendCode;
 import com.softdev.barcodescanner.models.Barcode;
 import com.softdev.barcodescanner.models.Store;
+import com.softdev.barcodescanner.network.CheckUser;
 import com.softdev.barcodescanner.network.SendRequest;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
@@ -51,7 +53,7 @@ import java.util.Set;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
 
-public class ScanActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
+public class ScanActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler, ISendCode {
 
     private Context mContext;
 
@@ -198,10 +200,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SendRequest(mContext, null, mAction).execute();
-
-                // clean
-                Store.deleteBarcode(mAction);
+                new CheckUser(mContext).execute();
             }
         });
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
@@ -223,6 +222,9 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         });
     }
 
+    public void sendBarcode() {
+        new SendRequest(mContext, null, mAction, mAdapter).execute();
+    }
     @Override
     public void handleResult(Result rawResult) {
         Toast.makeText(this, "Contents = " + rawResult.getText() +
@@ -230,7 +232,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
 
         String barcode = rawResult.getText();
         String action = Util.getActionTitle(this, mAction);
-        int key = Store.addBarcode(mAction, action, barcode, 0);
+        int key = Store.addBarcode(mAction, action, barcode, null, 0);
         mAdapter.notifyDataSetChanged();
 
 
@@ -252,23 +254,8 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     }
 
     private void dispatchTakePictureIntent() {
-//        mMagicalTakePhoto.takePhoto("my_photo_name");
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-
-            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-            File newdir = new File(dir);
-            newdir.mkdirs();
-            String file = dir + "1.jpg";
-            File newfile = new File(file);
-
-            try {
-                newfile.createNewFile();
-            } catch (IOException e) {
-            }
-
-            Uri outputFileUri = Uri.fromFile(newfile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -276,23 +263,12 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mMagicalTakePhoto.resultPhoto(requestCode, resultCode, data);
-        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-        String file = dir + "1.jpg";
-        File imgFile = new File(file);
 
-        if (imgFile.exists()) {
-
-            Bitmap bm = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            mCameraResultView.setImageBitmap(bm);
-        }
-
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-//                && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            mCameraResultView.setImageBitmap(imageBitmap);
+        if (requestCode == REQUEST_IMAGE_CAPTURE
+                && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mCameraResultView.setImageBitmap(imageBitmap);
             mCameraResultView.setVisibility(View.VISIBLE);
             mScannerLayout.setVisibility(View.GONE);
         }

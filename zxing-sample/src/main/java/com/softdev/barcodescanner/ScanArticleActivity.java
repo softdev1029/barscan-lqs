@@ -28,8 +28,10 @@ import com.frosquivel.magicaltakephoto.MagicalTakePhoto;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.zxing.Result;
 import com.softdev.barcodescanner.adapters.BarcodeAdapter;
+import com.softdev.barcodescanner.interfaces.ISendCode;
 import com.softdev.barcodescanner.models.Barcode;
 import com.softdev.barcodescanner.models.Store;
+import com.softdev.barcodescanner.network.CheckUser;
 import com.softdev.barcodescanner.network.SendRequest;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
@@ -49,7 +51,7 @@ import java.io.PrintWriter;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
 
-public class ScanArticleActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
+public class ScanArticleActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler, ISendCode{
 
     private Context mContext;
 
@@ -200,10 +202,7 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
         mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SendRequest(mContext, mBag.getMap(), mAction).execute();
-
-                // clean
-                mBag.deleteBarcode();
+                new CheckUser(mContext).execute();
             }
         });
         mCodeLogView.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +239,7 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
 
         String barcode = rawResult.getText();
         String action = Util.getActionTitle(this, mAction);
-        int key = mBag.addBarcode(barcode);
+        int key = mBag.addBarcode(barcode, null, 0);
         mAdapter.notifyDataSetChanged();
 
 
@@ -306,5 +305,10 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
             mCameraResultView.setVisibility(View.VISIBLE);
             mScannerLayout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void sendBarcode() {
+        new SendRequest(mContext, mBag.getMap(), mAction, mAdapter).execute();
     }
 }

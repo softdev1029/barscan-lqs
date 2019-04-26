@@ -1,5 +1,7 @@
 package com.softdev.barcodescanner.models;
 
+import android.text.format.DateFormat;
+
 import com.softdev.barcodescanner.utils.Constant;
 
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.HashMap;
 
 public class Barcode {
     private String mBarcode = null;
+    private String mTime = null;
     private int mActionType = Constant.DEFAULT_ACTION;
     private String mAction = null;
     private int mKey = 0;
@@ -41,16 +44,23 @@ public class Barcode {
         return mMap;
     }
 
-    public void setmMap(HashMap<Integer, Barcode> map) {
-        this.mMap = map;
+    public void setMap(HashMap<Integer, Barcode> map) {
+        mMap = map;
     }
 
-    public int addBarcode(String barcode) {
+    public int addBarcode(String barcode, String time, int key) {
         if (barcode == null) {
             return Constant.ERROR;
         }
         Barcode code = new Barcode();
-        int key = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        Date d = new Date();
+        if (time == null) {
+            time = DateFormat.format("MMMM d, yyyy HH:mm:ss", d.getTime()).toString();
+        }
+        code.setTime(time);
+        if (key == 0){
+            key = (int) ((d.getTime() / 1000L) % Integer.MAX_VALUE);
+        }
         code.setKey(key);
         code.setAction(mAction);
         code.setActionType(mActionType);
@@ -88,5 +98,13 @@ public class Barcode {
 
     public void setParentKey(int parentKey) {
         this.mParentKey = parentKey;
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public void setTime(String time) {
+        mTime = time;
     }
 }

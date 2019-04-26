@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void launchMain() {
-        startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+        startActivity(new Intent(getApplicationContext(), UserInfoActivity.class));
         finish();
     }
 }

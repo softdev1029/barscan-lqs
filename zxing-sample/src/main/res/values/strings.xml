@@ -33,6 +33,9 @@
     <string name="title_network">Network Connect</string>
     <string name="msg_network">Please wait...</string>
     <!-- share -->
+    <!-- userinfo -->
+    <string name="btn_start">START</string>
+    <string name="msg_userid">Please input your employee code</string>
     <!-- main -->
     <string name="btn_gateway">GATEWAY</string>
     <string name="btn_driver">DRIVER</string>
@@ -76,6 +79,7 @@
     <string name="btn_delete">DELETE</string>
     <string name="btn_send">SEND</string>
     <string name="msg_delete">Are you sure to delete?</string>
+    <string name="msg_no_user">You are not an existing employee.</string>
     <string name="lbl_pod_desc">POD: </string>
     <string name="lbl_obs">OBS: </string>
 </resources>

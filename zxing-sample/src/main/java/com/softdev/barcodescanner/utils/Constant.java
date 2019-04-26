@@ -31,8 +31,15 @@ public class Constant {
     public final static String JSON_BODY = "records";
     public final static String JSON_KEY = "key";
     public final static String JSON_CODE = "barcode";
+    public final static String JSON_TIME = "time";
     public final static String JSON_PARENT = "parent";
     public final static String JSON_TYPE = "type";
+    public final static String JSON_USERID = "userid";
+
+    public final static String URL_GET_CODE   = "https://script.google.com/macros/s/AKfycbyuX2dvx-iTuy9lOpk1XfxiYCoQdcSZcL4OqQ8PRx3BhSU4MUY/exec";
+    public final static String URL_ADD_CODE   = "https://script.google.com/macros/s/AKfycby9scXmuEz5rULglulTnI5Ad2gNLUTnphVedOXhbymDMJAigt4k/exec";
+    public final static String URL_CHECK_USER = "https://script.google.com/macros/s/AKfycbwM2v5GBU0q-hUyuCCbUUBYMZ1DSoQNwNEvdcVc2yxLHXUgKqPS/exec";
+    public final static String GOOGLE_DOC_ID  = "1l-Akhh1hF6e6-9WmPgGEko9pS6crYyz5X6OJ8mqOO0Y";
 
     // log
     public final static String TAG = "barscan";

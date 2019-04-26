@@ -77,14 +77,18 @@ public class GetDataTask extends AsyncTask<Void, Void, Void> {
                             JSONObject innerObject = array.getJSONObject(jIndex);
                             int key = Integer.valueOf(innerObject.getString(Constant.JSON_KEY));
                             String code = innerObject.getString(Constant.JSON_CODE);
+                            String time = innerObject.getString(Constant.JSON_TIME);
                             int parent = Integer.valueOf(innerObject.getString(Constant.JSON_PARENT));
                             int type = Integer.valueOf(innerObject.getString(Constant.JSON_TYPE));
-                            if (parent == 0) {
-                                Store.addBarcode(type, Util.getActionTitle(mContext, type), code, key);
-                            } else {
-                                Barcode parentBarcode = Store.getBarcode(type, parent);
-                                if (parentBarcode != null) {
-                                    parentBarcode.addBarcode(code);
+                            String userid = innerObject.getString(Constant.JSON_USERID);
+                            if (userid.equals(Store.getUserId())) {
+                                if (parent == 0) {
+                                    Store.addBarcode(type, Util.getActionTitle(mContext, type), code, time, key);
+                                } else {
+                                    Barcode parentBarcode = Store.getBarcode(type, parent);
+                                    if (parentBarcode != null) {
+                                        parentBarcode.addBarcode(code, time, key);
+                                    }
                                 }
                             }
                         }

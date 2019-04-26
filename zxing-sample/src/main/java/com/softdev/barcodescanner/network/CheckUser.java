@@ -7,7 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.softdev.barcodescanner.adapters.BarcodeAdapter;
+import com.softdev.barcodescanner.R;
+import com.softdev.barcodescanner.interfaces.ISendCode;
 import com.softdev.barcodescanner.models.Barcode;
 import com.softdev.barcodescanner.models.Store;
 import com.softdev.barcodescanner.utils.Constant;
@@ -26,21 +27,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
-import com.softdev.barcodescanner.R;
 
-public class SendRequest extends AsyncTask<String, Void, String> {
+public class CheckUser extends AsyncTask<String, Void, String> {
 
     private Context mContext;
-    private int mAction;
-    private HashMap<Integer, Barcode> mBag;
-    private RecyclerView.Adapter mAdapter;
     private ProgressDialog dialog;
 
-    public SendRequest(Context context, HashMap<Integer, Barcode> bag, int action, RecyclerView.Adapter adapter) {
+    public CheckUser(Context context) {
         mContext = context;
-        mAction = action;
-        mBag = bag;
-        mAdapter = adapter;
     }
 
     protected void onPreExecute() {
@@ -53,29 +47,17 @@ public class SendRequest extends AsyncTask<String, Void, String> {
 
     protected String doInBackground(String... arg0) {
 
-        HashMap<Integer, Barcode> map = Store.getBarcodeMap(mAction);
-        if (mBag != null) {
-            map = mBag;
-        }
-        for (HashMap.Entry<Integer, Barcode> entry : map.entrySet()) {
-            sendData(entry.getValue());
-        }
-        return "";
+        return check();
     }
 
-    private String sendData(Barcode barcode) {
+    private String check() {
         try{
 
-            URL url = new URL(Constant.URL_ADD_CODE);
+            URL url = new URL(Constant.URL_CHECK_USER);
             JSONObject postDataParams = new JSONObject();
 
             String id= Constant.GOOGLE_DOC_ID;
 
-            postDataParams.put(Constant.JSON_KEY, barcode.getKey());
-            postDataParams.put(Constant.JSON_CODE, barcode.getBarcode());
-            postDataParams.put(Constant.JSON_TIME, barcode.getTime());
-            postDataParams.put(Constant.JSON_PARENT, barcode.getParentKey());
-            postDataParams.put(Constant.JSON_TYPE, barcode.getActionType());
             postDataParams.put(Constant.JSON_USERID, Store.getUserId());
             postDataParams.put("id",id);
 
@@ -128,13 +110,11 @@ public class SendRequest extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         dialog.dismiss();
-        // clean
-        if (mBag == null) {
-            Store.deleteBarcode(mAction);
-            mAdapter.notifyDataSetChanged();
+
+        if (result.equals("-1")) {
+            Toast.makeText(mContext, R.string.msg_no_user, Toast.LENGTH_SHORT).show();
         } else {
-            mBag.clear();
-            mAdapter.notifyDataSetChanged();
+            ((ISendCode)mContext).sendBarcode();
         }
     }
 
