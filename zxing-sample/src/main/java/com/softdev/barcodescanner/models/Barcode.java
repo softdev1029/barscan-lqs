@@ -10,6 +10,9 @@ import java.util.HashMap;
 public class Barcode {
     private String mBarcode = null;
     private String mTime = null;
+    private String mObsPod = "";
+    private String mDamageImage = "";
+    private String mPodImage = "";
     private int mActionType = Constant.DEFAULT_ACTION;
     private String mAction = null;
     private int mKey = 0;
@@ -106,5 +109,29 @@ public class Barcode {
 
     public void setTime(String time) {
         mTime = time;
+    }
+
+    public String getDamageImage() {
+        return mDamageImage;
+    }
+
+    public void setDamageImage(String damageImage) {
+        mDamageImage = damageImage;
+    }
+
+    public String getPodImage() {
+        return mPodImage;
+    }
+
+    public void setPodImage(String podImage) {
+        mPodImage = podImage;
+    }
+
+    public String getObsPod() {
+        return mObsPod;
+    }
+
+    public void setObsPod(String obsPod) {
+        mObsPod = obsPod;
     }
 }

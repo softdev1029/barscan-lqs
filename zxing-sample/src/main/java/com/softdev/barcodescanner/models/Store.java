@@ -13,12 +13,21 @@ public class Store {
 
     private static String mUserId;
     private static ArrayList<HashMap<Integer, Barcode>> mCodeList = new ArrayList<>();
+    private static Barcode mCurrentBarcode;
 
     public static void configure() {
         for (int i = 0; i < Constant.ACTION_COUNT; i++) {
             HashMap<Integer, Barcode> map = new HashMap<>();
             mCodeList.add(map);
         }
+    }
+
+    public static Barcode getCurrentBarcode() {
+        return mCurrentBarcode;
+    }
+
+    public static void setCurrentBarcode(Barcode barcode) {
+        mCurrentBarcode = barcode;
     }
 
     public static int addBarcode(int actionType, String action, String barcode, String time, int key) {

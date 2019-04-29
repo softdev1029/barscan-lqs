@@ -21,7 +21,7 @@
     <dimen name="padding_scan_main_layout">10dp</dimen>
     <dimen name="height_scan_camera">150dp</dimen>
     <dimen name="height_scan_elem">100dp</dimen>
-    <dimen name="height_scan_code_list">100dp</dimen>
+    <dimen name="height_scan_code_list">200dp</dimen>
 
     <!-- scan item -->
     <dimen name="height_scan_item">40dp</dimen>

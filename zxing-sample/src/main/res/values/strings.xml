@@ -74,12 +74,16 @@
     <string name="lbl_scan">"GATEWAY SCAN\nLisbon Airport\nByPass Scan"</string>
 
     <!-- scan -->
-    <string name="btn_photo">PHOTO</string>
     <string name="btn_scan">SCAN</string>
+    <string name="btn_detail">DETAIL</string>
     <string name="btn_delete">DELETE</string>
     <string name="btn_send">SEND</string>
     <string name="msg_delete">Are you sure to delete?</string>
     <string name="msg_no_user">You are not an existing employee.</string>
     <string name="lbl_pod_desc">POD: </string>
     <string name="lbl_obs">OBS: </string>
+
+    <!-- scan detail -->
+    <string name="btn_photo">PHOTO</string>
+    <string name="btn_ok">OK</string>
 </resources>

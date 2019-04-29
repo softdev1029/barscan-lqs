@@ -35,6 +35,7 @@ import com.softdev.barcodescanner.network.CheckUser;
 import com.softdev.barcodescanner.network.SendRequest;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.FileUtil;
+import com.softdev.barcodescanner.utils.ImageUtil;
 import com.softdev.barcodescanner.utils.Util;
 
 import java.io.BufferedReader;
@@ -58,16 +59,12 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     private Context mContext;
 
     // views
-    private Button mBtnPhoto;
     private Button mBtnScan;
     private Button mBtnSend;
     private TextView mTitleView;
     private FrameLayout mScannerLayout;
     private ZXingScannerView mScannerView;
-    private ImageView mCameraResultView;
     private RecyclerView mCodeLogView;
-    private SignaturePad mSignaturePad;
-    private EditText mPodBox;
 
     // adapter
     private RecyclerView.Adapter mAdapter;
@@ -76,9 +73,6 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     // logic
     private int mAction;
     private final String FILE_NAME = "file-name";
-
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private MagicalTakePhoto mMagicalTakePhoto;
 
     @Override
     public void onCreate(Bundle state) {
@@ -105,7 +99,6 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     }
 
     private void initView() {
-        mBtnPhoto = findViewById(R.id.button_photo);
         mBtnScan = findViewById(R.id.button_scan);
         mBtnSend = findViewById(R.id.button_send);
 
@@ -115,15 +108,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         mScannerView = new ZXingScannerView(this);
         mScannerLayout.addView(mScannerView);
 
-        mCameraResultView = findViewById(R.id.iv_camera_result);
-        mCameraResultView.setVisibility(View.GONE);
-
         mCodeLogView = findViewById(R.id.code_log_view);
-
-        mPodBox = findViewById(R.id.et_pod);
-        mPodBox.setSelected(false);
-
-        mSignaturePad = (SignaturePad) findViewById(R.id.signature_pad);
     }
 
     private void initData() {
@@ -134,40 +119,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
 
         mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " for BAG");
 
-        if (mAction == Constant.ACTION_DAMAGE) {
-            mBtnPhoto.setVisibility(View.VISIBLE);
-        } else {
-            mBtnPhoto.setVisibility(View.GONE);
-        }
-
         String data = FileUtil.readData(this, FILE_NAME + mAction);
-
-        mMagicalTakePhoto = new MagicalTakePhoto(this);
-
-        if (mAction == Constant.ACTION_POD) {
-            mSignaturePad.setVisibility(View.VISIBLE);
-        } else {
-            mSignaturePad.setVisibility(View.GONE);
-        }
-
-        if (mAction == Constant.ACTION_BAD_ADDRESS ||
-                mAction == Constant.ACTION_REFUSED ||
-                mAction == Constant.ACTION_CLOSED ||
-                mAction == Constant.ACTION_DAMAGE) {
-            mPodBox.setText(R.string.lbl_obs);
-        } else {
-            mPodBox.setText(R.string.lbl_pod_desc);
-        }
-
-        if (mAction == Constant.ACTION_BYPASS ||
-                mAction == Constant.ACTION_AIRPORT ||
-                mAction == Constant.ACTION_DEPARTURE ||
-                mAction == Constant.ACTION_ARRIVAL ||
-                mAction == Constant.ACTION_DRIVER_LOAD) {
-            mPodBox.setVisibility(View.GONE);
-        } else {
-            mPodBox.setVisibility(View.VISIBLE);
-        }
 
         // adapter
         // use this setting to improve performance if you know that changes
@@ -184,17 +136,9 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     }
 
     private void setViewHandler() {
-        mBtnPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent();
-            }
-        });
         mBtnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mScannerLayout.setVisibility(View.VISIBLE);
-                mCameraResultView.setVisibility(View.GONE);
             }
         });
         mBtnSend.setOnClickListener(new View.OnClickListener() {
@@ -203,29 +147,10 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
                 new CheckUser(mContext).execute();
             }
         });
-        mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
-
-            @Override
-            public void onStartSigning() {
-                //Event triggered when the pad is touched
-            }
-
-            @Override
-            public void onSigned() {
-                //Event triggered when the pad is signed
-            }
-
-            @Override
-            public void onClear() {
-                //Event triggered when the pad is cleared
-            }
-        });
     }
 
     public void sendBarcode() {
         new SendRequest(mContext, null, mAction, mAdapter).execute();
-        mSignaturePad.clear();
-        mCameraResultView.setImageResource(0);
     }
     @Override
     public void handleResult(Result rawResult) {
@@ -253,26 +178,5 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
                 mScannerView.resumeCameraPreview(ScanActivity.this);
             }
         }, 2000);
-    }
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE
-                && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mCameraResultView.setImageBitmap(imageBitmap);
-            mCameraResultView.setVisibility(View.VISIBLE);
-            mScannerLayout.setVisibility(View.GONE);
-        }
     }
 }

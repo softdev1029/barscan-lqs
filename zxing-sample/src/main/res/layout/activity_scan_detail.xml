@@ -6,16 +6,16 @@
     android:background="@color/bg">
 
     <Button
-        android:id="@+id/button_scan"
+        android:id="@+id/button_photo"
         android:layout_width="@dimen/width_scan_btn"
         android:layout_height="@dimen/height_scan_btn"
         android:layout_marginEnd="@dimen/margin_end_scan_btn_scan"
         android:layout_marginRight="@dimen/margin_end_scan_btn_scan"
         android:layout_marginTop="@dimen/margin_top_scan_btn_scan"
         android:background="@color/btn"
-        android:text="@string/btn_scan"
+        android:text="@string/btn_photo"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -60,26 +60,46 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/content_frame"
+            <ImageView
+                android:id="@+id/iv_camera_result"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_scan_camera" />
+                android:layout_height="@dimen/height_scan_elem"
+                android:src="@drawable/logo" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/code_log_view"
+            <com.github.gcacace.signaturepad.views.SignaturePad xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/signature_pad"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_scan_code_list"
-                android:layout_weight="4"
+                android:layout_height="@dimen/height_scan_elem"
+                android:layout_marginTop="2dp"
                 android:background="@color/white"
-                android:scrollbars="vertical" />
+                android:text="For Customer Signature"
+                android:textSize="35sp"
+                app:penColor="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/height_scan_elem"
+                android:layout_marginTop="2dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/et_pod"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="top"
+                    android:text="@string/lbl_pod_desc" />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button_send"
+                android:id="@+id/button_ok"
                 android:layout_width="@dimen/width_scan_btn"
                 android:layout_height="@dimen/height_scan_btn"
                 android:layout_marginTop="10dp"
                 android:background="@color/btn"
-                android:text="@string/btn_send"
+                android:text="@string/btn_ok"
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>

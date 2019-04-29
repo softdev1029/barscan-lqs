@@ -115,6 +115,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
+            android:name=".ScanDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
             android:name=".DeliveryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />

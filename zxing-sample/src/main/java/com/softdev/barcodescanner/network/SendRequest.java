@@ -74,6 +74,9 @@ public class SendRequest extends AsyncTask<String, Void, String> {
             postDataParams.put(Constant.JSON_KEY, barcode.getKey());
             postDataParams.put(Constant.JSON_CODE, barcode.getBarcode());
             postDataParams.put(Constant.JSON_TIME, barcode.getTime());
+            postDataParams.put(Constant.JSON_OBS_POD, barcode.getObsPod());
+            postDataParams.put(Constant.JSON_DAMAGE_IMAGE, barcode.getDamageImage());
+            postDataParams.put(Constant.JSON_POD_IMAGE, barcode.getPodImage());
             postDataParams.put(Constant.JSON_PARENT, barcode.getParentKey());
             postDataParams.put(Constant.JSON_TYPE, barcode.getActionType());
             postDataParams.put(Constant.JSON_USERID, Store.getUserId());
