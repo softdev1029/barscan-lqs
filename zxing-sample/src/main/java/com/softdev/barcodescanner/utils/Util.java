@@ -2,7 +2,7 @@ package com.softdev.barcodescanner.utils;
 
 import android.content.Context;
 
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 public class Util {
     public static int getActionTitleId(int action) {

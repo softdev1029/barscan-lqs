@@ -19,10 +19,10 @@ import com.softdev.barcodescanner.ScanArticleActivity;
 import com.softdev.barcodescanner.ScanDetailActivity;
 import com.softdev.barcodescanner.UserInfoActivity;
 import com.softdev.barcodescanner.models.Barcode;
-import com.softdev.barcodescanner.R;
 import com.softdev.barcodescanner.models.Store;
 import com.softdev.barcodescanner.utils.Constant;
 
+import com.lqstc.barscannar.R;
 
 import org.w3c.dom.Text;
 

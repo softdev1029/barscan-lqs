@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.softdev.barcodescanner.utils.Constant;
 import com.softdev.barcodescanner.utils.Util;
 import com.softdev.barcodescanner.network.GetDataTask;
-
+import com.lqstc.barscannar.R;
 public class ScanIntroActivity
         extends AppCompatActivity {
 

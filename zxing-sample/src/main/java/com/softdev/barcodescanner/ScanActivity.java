@@ -53,7 +53,7 @@ import java.util.Set;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
-
+import com.lqstc.barscannar.R;
 public class ScanActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler, ISendCode {
 
     private Context mContext;

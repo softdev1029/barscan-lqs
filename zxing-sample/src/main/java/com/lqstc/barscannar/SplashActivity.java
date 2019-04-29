@@ -1,4 +1,4 @@
-package com.softdev.barcodescanner;
+package com.lqstc.barscannar;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,8 +7,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.softdev.barcodescanner.LoginActivity;
 import com.softdev.barcodescanner.models.Store;
-
+import com.lqstc.barscannar.R;
 public class SplashActivity extends AppCompatActivity {
 
     @Override

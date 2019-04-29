@@ -1,7 +1,7 @@
 package me.dm7.barcodescanner.zxing.sample;
 
 import android.os.Bundle;
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 public class FullScannerFragmentActivity extends BaseScannerActivity {
     @Override

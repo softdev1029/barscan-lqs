@@ -17,6 +17,6 @@ dependencies {
 
 android {
     defaultConfig {
-        applicationId "${project.group}.zxing.sample"
+        applicationId "com.lqstc.barscannar"
     }
 }

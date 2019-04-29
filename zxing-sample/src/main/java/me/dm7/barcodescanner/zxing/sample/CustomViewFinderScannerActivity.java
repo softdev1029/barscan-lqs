@@ -17,7 +17,7 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 public class CustomViewFinderScannerActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;

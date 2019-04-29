@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.softdev.barcodescanner.utils.Constant;
+import com.lqstc.barscannar.R;
 
 public class DeliveryActivity
         extends AppCompatActivity {

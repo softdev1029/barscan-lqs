@@ -19,7 +19,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.softdev.barcodescanner.models.Store;
 import com.softdev.barcodescanner.utils.Constant;
-
+import com.lqstc.barscannar.R;
 public class UserInfoActivity extends AppCompatActivity {
 
     // view

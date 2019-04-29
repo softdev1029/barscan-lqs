@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 public class SendRequest extends AsyncTask<String, Void, String> {
 

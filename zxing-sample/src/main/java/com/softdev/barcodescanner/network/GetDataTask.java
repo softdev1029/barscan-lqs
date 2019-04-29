@@ -15,7 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 /**
  * Creating Get Data Task for Getting Data From Web

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 public class SimpleScannerFragment extends Fragment implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;

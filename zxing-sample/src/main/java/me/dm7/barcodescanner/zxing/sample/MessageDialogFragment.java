@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 
 public class MessageDialogFragment extends DialogFragment {
     public interface MessageDialogListener {

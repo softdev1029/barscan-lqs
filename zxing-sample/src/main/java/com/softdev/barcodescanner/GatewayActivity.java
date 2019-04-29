@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.softdev.barcodescanner.utils.Constant;
 
+import com.lqstc.barscannar.R;
+
 public class GatewayActivity
         extends AppCompatActivity {
     private Button mBtnBypass = null;

@@ -34,7 +34,7 @@ import com.softdev.barcodescanner.utils.Util;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
-
+import com.lqstc.barscannar.R;
 public class ScanDetailActivity extends AppCompatActivity {
 
     private Context mContext;

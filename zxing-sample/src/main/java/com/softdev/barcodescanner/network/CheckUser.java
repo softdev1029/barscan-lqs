@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.softdev.barcodescanner.R;
+import com.lqstc.barscannar.R;
 import com.softdev.barcodescanner.interfaces.ISendCode;
 import com.softdev.barcodescanner.models.Barcode;
 import com.softdev.barcodescanner.models.Store;

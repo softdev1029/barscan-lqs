@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.softdev.barcodescanner">
+    package="com.lqstc.barscannar">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -75,31 +75,31 @@
             android:label="@string/scaling_scanner_activity"
             android:theme="@style/AppTheme"></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.softdev.barcodescanner.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".UserInfoActivity"
+            android:name="com.softdev.barcodescanner.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".MenuActivity"
+            android:name="com.softdev.barcodescanner.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".GatewayActivity"
+            android:name="com.softdev.barcodescanner.GatewayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".DriverActivity"
+            android:name="com.softdev.barcodescanner.DriverActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ScanIntroActivity"
+            android:name="com.softdev.barcodescanner.ScanIntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ScanActivity"
+            android:name="com.softdev.barcodescanner.ScanActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -110,17 +110,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScanArticleActivity"
+            android:name="com.softdev.barcodescanner.ScanArticleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".ScanDetailActivity"
+            android:name="com.softdev.barcodescanner.ScanDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".DeliveryActivity"
+            android:name="com.softdev.barcodescanner.DeliveryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>
