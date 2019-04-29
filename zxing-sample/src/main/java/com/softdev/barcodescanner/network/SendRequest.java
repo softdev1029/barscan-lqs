@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
+
 import com.lqstc.barscannar.R;
 
 public class SendRequest extends AsyncTask<String, Void, String> {
@@ -64,12 +65,17 @@ public class SendRequest extends AsyncTask<String, Void, String> {
     }
 
     private String sendData(Barcode barcode) {
-        try{
+        try {
 
             URL url = new URL(Constant.URL_ADD_CODE);
             JSONObject postDataParams = new JSONObject();
 
-            String id= Constant.GOOGLE_DOC_ID;
+            String id = Constant.GOOGLE_DOC_ID;
+
+            String parentBarcode = "";
+            if (barcode.getParentKey() != 0) {
+                parentBarcode = Store.getBarcode(barcode.getActionType(), barcode.getParentKey()).getBarcode();
+            }
 
             postDataParams.put(Constant.JSON_KEY, barcode.getKey());
             postDataParams.put(Constant.JSON_CODE, barcode.getBarcode());
@@ -77,13 +83,13 @@ public class SendRequest extends AsyncTask<String, Void, String> {
             postDataParams.put(Constant.JSON_OBS_POD, barcode.getObsPod());
             postDataParams.put(Constant.JSON_DAMAGE_IMAGE, barcode.getDamageImage());
             postDataParams.put(Constant.JSON_POD_IMAGE, barcode.getPodImage());
-            postDataParams.put(Constant.JSON_PARENT, barcode.getParentKey());
+            postDataParams.put(Constant.JSON_PARENT, parentBarcode);
             postDataParams.put(Constant.JSON_TYPE, barcode.getActionType());
             postDataParams.put(Constant.JSON_USERID, Store.getUserId());
-            postDataParams.put("id",id);
+            postDataParams.put("id", id);
 
 
-            Log.e("params",postDataParams.toString());
+            Log.e("params", postDataParams.toString());
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(15000 /* milliseconds */);
@@ -101,15 +107,15 @@ public class SendRequest extends AsyncTask<String, Void, String> {
             writer.close();
             os.close();
 
-            int responseCode=conn.getResponseCode();
+            int responseCode = conn.getResponseCode();
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-                BufferedReader in=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuffer sb = new StringBuffer("");
-                String line="";
+                String line = "";
 
-                while((line = in.readLine()) != null) {
+                while ((line = in.readLine()) != null) {
 
                     sb.append(line);
                     break;
@@ -118,15 +124,14 @@ public class SendRequest extends AsyncTask<String, Void, String> {
                 in.close();
                 return sb.toString();
 
+            } else {
+                return new String("false : " + responseCode);
             }
-            else {
-                return new String("false : "+responseCode);
-            }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return new String("Exception: " + e.getMessage());
         }
     }
+
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
@@ -148,9 +153,9 @@ public class SendRequest extends AsyncTask<String, Void, String> {
 
         Iterator<String> itr = params.keys();
 
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
 
-            String key= itr.next();
+            String key = itr.next();
             Object value = params.get(key);
 
             if (first)

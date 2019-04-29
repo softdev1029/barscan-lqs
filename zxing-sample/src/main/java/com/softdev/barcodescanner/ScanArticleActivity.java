@@ -132,7 +132,7 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
 
         // specify an adapter (see also next example)
         mBag = Store.getBarcodeMap(mAction).get(mBagKey);
-        mAdapter = new BarcodeAdapter(this, mBag.getMap());
+        mAdapter = new BarcodeAdapter(this, mBag.getMap(), false);
         mCodeLogView.setAdapter(mAdapter);
     }
 

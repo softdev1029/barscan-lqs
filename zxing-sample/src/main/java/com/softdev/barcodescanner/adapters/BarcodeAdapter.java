@@ -32,6 +32,7 @@ import java.util.Set;
 public class BarcodeAdapter extends RecyclerView.Adapter<BarcodeAdapter.ViewHolder> {
     private HashMap<Integer, Barcode> mDataset;
     private Context mContext;
+    private boolean mIsBag = true;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView barcodeView;
@@ -47,9 +48,10 @@ public class BarcodeAdapter extends RecyclerView.Adapter<BarcodeAdapter.ViewHold
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public BarcodeAdapter(Context context, HashMap<Integer, Barcode> dataset) {
+    public BarcodeAdapter(Context context, HashMap<Integer, Barcode> dataset, boolean isBag) {
         mContext = context;
         mDataset = dataset;
+        mIsBag = isBag;
     }
 
     // Create new views (invoked by the layout manager)
@@ -77,10 +79,12 @@ public class BarcodeAdapter extends RecyclerView.Adapter<BarcodeAdapter.ViewHold
         holder.barcodeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ScanArticleActivity.class);
-                intent.putExtra(Constant.ACTION_NAME, code.getActionType());
-                intent.putExtra(Constant.BAG_KEY, key);
-                mContext.startActivity(intent);
+                if (mIsBag) {
+                    Intent intent = new Intent(mContext, ScanArticleActivity.class);
+                    intent.putExtra(Constant.ACTION_NAME, code.getActionType());
+                    intent.putExtra(Constant.BAG_KEY, key);
+                    mContext.startActivity(intent);
+                }
             }
         });
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {

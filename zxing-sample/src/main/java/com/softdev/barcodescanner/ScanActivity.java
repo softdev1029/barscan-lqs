@@ -131,7 +131,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         mCodeLogView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new BarcodeAdapter(this, Store.getBarcodeMap(mAction));
+        mAdapter = new BarcodeAdapter(this, Store.getBarcodeMap(mAction), true);
         mCodeLogView.setAdapter(mAdapter);
     }
 
