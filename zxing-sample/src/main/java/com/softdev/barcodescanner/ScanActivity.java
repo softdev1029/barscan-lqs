@@ -119,7 +119,16 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         Intent i = getIntent();
         mAction = i.getIntExtra(Constant.ACTION_NAME, Constant.DEFAULT_ACTION);
 
-        mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " for BAG");
+        String suffix = "BAG";
+        if (mAction == Constant.ACTION_DRIVER_LOAD ||
+                mAction == Constant.ACTION_BAD_ADDRESS ||
+                mAction == Constant.ACTION_REFUSED ||
+                mAction == Constant.ACTION_CLOSED ||
+                mAction == Constant.ACTION_DAMAGE ||
+                mAction == Constant.ACTION_POD) {
+            suffix = "Shipment";
+        }
+        mTitleView.setText(getResources().getString(Util.getActionTitleId(mAction)) + " " + suffix);
 
         String data = FileUtil.readData(this, FILE_NAME + mAction);
 
