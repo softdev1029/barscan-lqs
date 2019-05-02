@@ -80,6 +80,8 @@
     <string name="btn_send">SEND</string>
     <string name="msg_delete">Are you sure to delete?</string>
     <string name="msg_no_user">You are not an existing employee.</string>
+    <string name="lbl_dialog_manual_code">Manual Barcode</string>
+    <string name="msg_manual_code">Enter barcode manually</string>
     <string name="lbl_pod_desc">POD: </string>
     <string name="lbl_obs">OBS: </string>
 

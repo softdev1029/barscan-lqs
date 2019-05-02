@@ -1,5 +1,6 @@
 package com.softdev.barcodescanner;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -140,6 +142,32 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
         mBtnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+                LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.dialog_scan, null);
+                dialogBuilder.setView(dialogView);
+
+                final EditText edt = dialogView.findViewById(R.id.et_code);
+
+                dialogBuilder.setTitle(R.string.lbl_dialog_manual_code);
+                dialogBuilder.setMessage(R.string.msg_manual_code);
+                dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //do something with edt.getText().toString();
+                        Barcode barcode = new Barcode();
+                        String code = edt.getText().toString();
+                        String action = Util.getActionTitle(mContext, mAction);
+                        mBag.addBarcode(code, null, 0);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //pass
+                    }
+                });
+                AlertDialog b = dialogBuilder.create();
+                b.show();
             }
         });
         mBtnSend.setOnClickListener(new View.OnClickListener() {
