@@ -13,6 +13,13 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
@@ -103,7 +110,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="com.softdev.barcodescanner.ScanActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -118,7 +125,7 @@
             android:name="com.softdev.barcodescanner.ScanDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name="com.softdev.barcodescanner.DeliveryActivity"
             android:screenOrientation="portrait"

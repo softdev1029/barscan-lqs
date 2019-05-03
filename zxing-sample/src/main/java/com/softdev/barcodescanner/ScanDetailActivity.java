@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -39,6 +40,7 @@ import com.softdev.barcodescanner.utils.Util;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.sample.BaseScannerActivity;
+
 import com.lqstc.barscannar.R;
 
 import java.io.File;
@@ -63,6 +65,8 @@ public class ScanDetailActivity extends AppCompatActivity {
     private boolean mIsSignature = false;
     private Uri mImageFileUri;
 
+    private String[] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW", "android.permission.CAMERA"};
+
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -71,6 +75,8 @@ public class ScanDetailActivity extends AppCompatActivity {
         initView();
         initData();
         setViewHandler();
+
+        initPermission();
     }
 
     @Override
@@ -173,6 +179,13 @@ public class ScanDetailActivity extends AppCompatActivity {
                 //Event triggered when the pad is cleared
             }
         });
+    }
+
+    private void initPermission() {
+        int requestCode = 200;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode);
+        }
     }
 
     private void dispatchTakePictureIntent() {
