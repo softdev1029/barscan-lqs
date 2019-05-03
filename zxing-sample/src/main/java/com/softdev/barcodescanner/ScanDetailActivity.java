@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -96,7 +97,7 @@ public class ScanDetailActivity extends AppCompatActivity {
         mTitleView = findViewById(R.id.tv_title);
 
         mCameraResultView = findViewById(R.id.iv_camera_result);
-        mCameraResultView.setVisibility(View.GONE);
+        mCameraResultView.setVisibility(View.INVISIBLE);
 
         mPodBox = findViewById(R.id.et_pod);
         mPodBox.setSelected(false);
@@ -179,6 +180,14 @@ public class ScanDetailActivity extends AppCompatActivity {
                 //Event triggered when the pad is cleared
             }
         });
+
+//        mCameraResultView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                mCameraResultView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                mCameraResultView.getHeight(); //height is ready
+//            }
+//        });
     }
 
     private void initPermission() {
@@ -230,33 +239,17 @@ public class ScanDetailActivity extends AppCompatActivity {
                     inputStream = contentResolver.openInputStream(mImageFileUri);
                     imageBitmap = BitmapFactory.decodeStream(inputStream);
 
-                    // Get the dimensions of the View
-                    mCameraResultView.setVisibility(View.VISIBLE);
-//                    int targetW = mCameraResultView.getWidth();
-//                    int targetH = mCameraResultView.getHeight();
-//
-//                    // Get the dimensions of the bitmap
-//                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-//                    bmOptions.inJustDecodeBounds = true;
-//                    BitmapFactory.decodeFile(mImageFileUri.getPath(), bmOptions);
-//                    int photoW = bmOptions.outWidth;
-//                    int photoH = bmOptions.outHeight;
-//
-//                    // Determine how much to scale down the image
-//                    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-//
-//                    // Decode the image file into a Bitmap sized to fill the View
-//                    bmOptions.inJustDecodeBounds = false;
-//                    bmOptions.inSampleSize = scaleFactor;
-//                    bmOptions.inPurgeable = true;
-//
-//                    imageBitmap = BitmapFactory.decodeFile(mImageFileUri.getPath(), bmOptions);
-
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
             code.setDamageImage(ImageUtil.getStringImage(imageBitmap));
+
+            // Get the dimensions of the View
+            mCameraResultView.setVisibility(View.VISIBLE);
+            int targetW = mCameraResultView.getWidth();
+            int targetH = mCameraResultView.getHeight();
+            imageBitmap = ImageUtil.getResizedBitmap(imageBitmap, targetW, targetH);
             mCameraResultView.setImageBitmap(imageBitmap);
         }
     }
