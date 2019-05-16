@@ -216,6 +216,6 @@ public class ScanArticleActivity extends BaseScannerActivity implements ZXingSca
 
     @Override
     public void sendBarcode() {
-        new SendRequest(mContext, mBag.getMap(), mAction, mAdapter).execute();
+        new SendRequest(mContext, mAction, mBag, mAdapter).execute();
     }
 }

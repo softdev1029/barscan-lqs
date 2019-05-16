@@ -127,16 +127,6 @@ public class ScanDetailActivity extends AppCompatActivity {
         } else {
             mPodBox.setText(R.string.lbl_pod_desc);
         }
-
-        if (mAction == Constant.ACTION_BYPASS ||
-                mAction == Constant.ACTION_AIRPORT ||
-                mAction == Constant.ACTION_DEPARTURE ||
-                mAction == Constant.ACTION_ARRIVAL ||
-                mAction == Constant.ACTION_DRIVER_LOAD) {
-            mPodBox.setVisibility(View.GONE);
-        } else {
-            mPodBox.setVisibility(View.VISIBLE);
-        }
     }
 
     private void setViewHandler() {

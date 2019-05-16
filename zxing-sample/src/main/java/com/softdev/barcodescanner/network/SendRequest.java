@@ -33,11 +33,11 @@ public class SendRequest extends AsyncTask<String, Void, String> {
 
     private Context mContext;
     private int mAction;
-    private HashMap<Integer, Barcode> mBag;
+    private Barcode mBag;
     private RecyclerView.Adapter mAdapter;
     private ProgressDialog dialog;
 
-    public SendRequest(Context context, HashMap<Integer, Barcode> bag, int action, RecyclerView.Adapter adapter) {
+    public SendRequest(Context context, int action, Barcode bag, RecyclerView.Adapter adapter) {
         mContext = context;
         mAction = action;
         mBag = bag;
@@ -56,7 +56,8 @@ public class SendRequest extends AsyncTask<String, Void, String> {
 
         HashMap<Integer, Barcode> map = Store.getBarcodeMap(mAction);
         if (mBag != null) {
-            map = mBag;
+            map = mBag.getMap();
+            sendData(mBag);
         }
         for (HashMap.Entry<Integer, Barcode> entry : map.entrySet()) {
             sendData(entry.getValue());
@@ -141,7 +142,8 @@ public class SendRequest extends AsyncTask<String, Void, String> {
             Store.deleteBarcode(mAction);
             mAdapter.notifyDataSetChanged();
         } else {
-            mBag.clear();
+            mBag.deleteBarcode();
+            Store.deleteBarcode(mAction, mBag.getKey());
             mAdapter.notifyDataSetChanged();
         }
     }

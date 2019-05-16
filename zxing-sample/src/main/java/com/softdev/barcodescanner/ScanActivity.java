@@ -92,6 +92,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -187,7 +188,7 @@ public class ScanActivity extends BaseScannerActivity implements ZXingScannerVie
     }
 
     public void sendBarcode() {
-        new SendRequest(mContext, null, mAction, mAdapter).execute();
+        new SendRequest(mContext, mAction, null, mAdapter).execute();
     }
     @Override
     public void handleResult(Result rawResult) {
